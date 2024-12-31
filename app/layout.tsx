@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Lato } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: "VimaBlog | Home",
@@ -20,7 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.className} antialiased`}>{children}</body>
+      <body className={`${lato.className} overflow-x-hidden flex flex-col justify-center items-center`}>
+        <Navbar/>
+        {children}
+        </body>
     </html>
   );
 }
