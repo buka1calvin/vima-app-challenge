@@ -3,8 +3,14 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
+  icons:{
+    icon:"/icons/v.svg",
+    apple:"/icons/v.svg"
+  },
   title: "VimaBlog | Home",
   description: "Vima Blog is your go-to platform for the latest news, insights, and trends from around the world. Discover articles on a variety of topics, updated regularly.",
 };
@@ -24,6 +30,8 @@ export default function RootLayout({
       <body className={`${lato.className} overflow-x-hidden flex flex-col justify-center items-center`}>
         <Navbar/>
         {children}
+        <ScrollToTop/>
+        <Footer/>
         </body>
     </html>
   );

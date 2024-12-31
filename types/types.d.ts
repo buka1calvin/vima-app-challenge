@@ -1,14 +1,14 @@
 type blog = {
-    image: string;
-    link: string;
-    intro: {
-      title: string;
-      icon: string;
-    };
-    description: string;
-    user: {
-      avatar: string;
-      name: string;
-      date: string;
-    };
+    image?: string;
+    title:string;
+    body: string;
+    userId:number;
+    id:number;
   };
+
+  type User ={
+    id: number;
+    name: string;
+    email: string;
+    username: string;
+  }

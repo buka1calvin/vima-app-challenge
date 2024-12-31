@@ -1,28 +1,63 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { useUsers } from "@/contexts/UsersProvider";
 
-const PostCard: React.FC<blog> = ({ image, intro, description, user,link}) => {
+const PostCard: React.FC<blog> = ({ title,body,userId,id }) => {
+  const {user,fetchUser}=useUsers()
+
+  useEffect(()=>{
+    if (userId) {
+      fetchUser(userId);
+    }
+  },[userId,fetchUser])
   return (
-    <Link href={link} className="group max-w-[384px]  rounded-lg shadow-lg flex flex-col gap-4 hover:bg-[#fcfffde8] hover:transition duration-100 ease-in-out">
-      <Image src={image} alt="" width={336} height={240} className="group-hover:grayscale-[70%]"/>
-      <div className="flex flex-col gap-3 p-4">
-        <div className="flex text-sm font-bold text-primary-2 w-full items-start justify-between cursor-pointer  group-hover:text-[#0065a4e7]">
-          <span className="w-[85%]">
-          {intro.title}
-          </span>
-          <Image src={intro.icon} alt="" width={24} height={24}/>
+    <motion.div
+      whileHover={{
+        scale: 1.05,
+        rotateX: 5,
+        rotateY: -5,
+        boxShadow: "0px 20px 30px rgba(0, 0, 0, 0.2)",
+      }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      className="relative max-w-[384px] rounded-xl shadow-inner shadow-gray-900/20 p-4 flex flex-col gap-4 bg-gradient-to-br from-white/60 via-white/40 to-white/20 backdrop-blur-md border border-gray-300 overflow-hidden transform-gpu"
+    >
+      <div
+        className="absolute inset-0 rounded-xl bg-gradient-to-br from-transparent via-white/30 to-white/10 opacity-70 pointer-events-none"
+        aria-hidden="true"
+      ></div>
+
+      <Link href={`/article/${id}`} className="relative z-10">
+        <Image
+          src="/images/Designer.jpeg"
+          alt="Card Image"
+          width={384}
+          height={240}
+          className="rounded-lg object-cover w-full shadow-md"
+        />
+        <div className="flex flex-col gap-3 mt-4">
+          <div className="flex items-start text-pretty justify-between text-sm font-bold text-primary-2 hover:text-primary">
+            <span className="w-full">{title}</span>
+          </div>
+          <p className="text-sm text-[#667085] line-clamp-2">{body}</p>
         </div>
-        <p className="text-sm text-[#667085] line-clamp-2">{description}</p>
-      </div>
-      <div className="flex items-center gap-3 px-4 pb-3">
-        <Image src={user.avatar} alt="" width={40} height={40} className="rounded-full w-[40px] h-[40px]"/>
-        <div className="text-sm flex flex-col justify-between">
-          <h1 className="font-md">{user.name}</h1>
-          <h3 className="text-[#667085]">{user.date}</h3>
+      </Link>
+      <div className="flex items-center gap-3 mt-4">
+        <Image
+          src="https://randomuser.me/api/portraits/men/1.jpg"
+          alt="User Avatar"
+          width={40}
+          height={40}
+          className="rounded-full w-[40px] h-[40px]"
+        />
+        <div className="text-sm flex flex-col">
+          <h1 className="font-medium">{user?.name}</h1>
+          <h3 className="text-[#667085]">20 Jan 2022</h3>
         </div>
       </div>
-    </Link>
+    </motion.div>
   );
 };
 
